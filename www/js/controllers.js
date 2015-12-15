@@ -26,14 +26,23 @@ angular.module('stop_motion_pi_pro.controllers', [])
 })
 
 .controller('takeImageCtrl', function($scope, $ionicPopup, connectService, cameraService) {
+    var ip = connectService.get_ip();
+    
+    $scope.clear_mount = function() {
+        cameraService.clear_mount(ip).then(function(response) {
+            var success_message = $ionicPopup.alert({
+                title: "Success Message",
+                template: response
+            })
+        })
+    };
+    
     $scope.take_image = function() {
-        var ip = connectService.get_ip();
-        
         cameraService.take_image(ip).then(function(response) {
             var success_message = $ionicPopup.alert({
                 title: "Success Message",
-                template: response,
+                template: response
             });
         });
-    }
+    };
 });
