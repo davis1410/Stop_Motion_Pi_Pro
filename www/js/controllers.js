@@ -47,7 +47,7 @@ angular.module('stop_motion_pi_pro.controllers', [])
     
     $scope.clear_mount = function() {
         cameraService.clear_mount(ip).then(function(response) {
-            var success_message = $ionicPopup.alert({
+            var result = $ionicPopup.alert({
                 title: "Message",
                 template: response
             })
@@ -56,7 +56,16 @@ angular.module('stop_motion_pi_pro.controllers', [])
     
     $scope.take_image = function() {
         cameraService.take_image(ip, dir).then(function(response) {
-            var success_message = $ionicPopup.alert({
+            var result = $ionicPopup.alert({
+                title: "Message",
+                template: response
+            });
+        });
+    };
+    
+    $scope.compile_preview = function() {
+        cameraService.compile_preview(ip, dir).then(function(response) {
+            var result = $ionicPopup.alert({
                 title: "Message",
                 template: response
             });
