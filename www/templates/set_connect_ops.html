@@ -1,15 +1,13 @@
 <ion-view view-title="Set Connection Options">
     <ion-content>
         <!-- Set Connection IP -->
-       <div class="card" ng-if="current_ip">
-            <div class="list">
-                <div class="item item-input">
+        <div class="card">
+            <div class="list" ng-if="current_ip">
+                <div class="item">
                     current ip = {{ current_ip }}
                 </div>
             </div>
-       </div>
-       
-        <div class="card">
+           
             <form name="set_connection_ip" ng-submit="set_ip(connection_ip, set_connection_ip)">
                 <div class="list">
                     <label class="item item-input">
@@ -21,17 +19,15 @@
                 </div>
             </form>
         </div>
-           
-        <div class="card" ng-if="current_dir">
-            <div class="list">
-                <div class="item item-input">
-                    current image directory = {{ current_dir }}
-                </div>
-            </div>
-       </div>
        
        <!-- Set Image Directory -->
         <div class="card">
+            <div class="list" ng-if="current_dir">
+                <div class="item">
+                    ~/{{ current_dir }}
+                </div>
+            </div>
+           
             <form name="set_image_directory" ng-submit="set_dir(image_directory)">
                 <div class="list">
                     <label class="item item-input">
