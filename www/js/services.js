@@ -10,6 +10,12 @@ angular.module('stop_motion_pi_pro.services', [])
         },
         get_ip: function() {
             return localStorage['connection_ip'];
+        },
+        set_dir: function(dir) {
+            localStorage['image_directory'] = dir;
+        },
+        get_dir: function() {
+            return localStorage['image_directory'];
         }
     }
 })
@@ -26,8 +32,8 @@ angular.module('stop_motion_pi_pro.services', [])
             
             return get_pid;
         },
-        take_image: function(ip) {
-            var capture_image = $http.get('http://' + ip + ':8000/camera_ops/take_image/')
+        take_image: function(ip, dir) {
+            var capture_image = $http.get('http://' + ip + ':8000/camera_ops/take_image/?image_dir=' + dir)
 //            var capture_image = $http.get(DjangoCamControllerAPI + '/camera_ops/take_image/')
             .then(function(response) {
                 var image_captured = response.data.success;

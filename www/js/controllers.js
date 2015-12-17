@@ -10,11 +10,17 @@ angular.module('stop_motion_pi_pro.controllers', [])
     //});
 })
 
-.controller('SetIPCtrl', function($scope, connectService) {
+.controller('SetOpsCtrl', function($scope, connectService) {
     var current_ip = connectService.get_ip();
+    var current_dir = connectService.get_dir();
+    
     if (current_ip) {
         $scope.current_ip = current_ip;
-    }
+    };
+    
+    if (current_dir) {
+        $scope.current_dir = current_dir;
+    };
     
     $scope.set_ip = function(ip, form_name) {
         connectService.set_ip(ip);
@@ -23,10 +29,21 @@ angular.module('stop_motion_pi_pro.controllers', [])
 //        $scope[form_name].$setPristine();
 //        $scope[form_name].$setUntouched();
     };
+    
+    $scope.set_dir = function(dir) {
+        connectService.set_dir(dir);
+        $scope.current_dir = dir;
+    };
 })
 
 .controller('takeImageCtrl', function($scope, $ionicPopup, connectService, cameraService) {
-    var ip = connectService.get_ip();
+    var ip;
+    var dir;
+    
+    $scope.$on('$ionicView.enter', function(e) {
+        ip = connectService.get_ip();
+        dir = connectService.get_dir();
+    });
     
     $scope.clear_mount = function() {
         cameraService.clear_mount(ip).then(function(response) {
@@ -38,7 +55,7 @@ angular.module('stop_motion_pi_pro.controllers', [])
     };
     
     $scope.take_image = function() {
-        cameraService.take_image(ip).then(function(response) {
+        cameraService.take_image(ip, dir).then(function(response) {
             var success_message = $ionicPopup.alert({
                 title: "Message",
                 template: response

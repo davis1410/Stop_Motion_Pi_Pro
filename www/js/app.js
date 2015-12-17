@@ -33,11 +33,11 @@ angular.module('stop_motion_pi_pro', ['ionic', 'stop_motion_pi_pro.controllers',
     })
 
     .state('app.set_ip', {
-        url: '/set_ip',
+        url: '/set_connect_ops',
         views: {
             'menuContent': {
-                templateUrl: 'templates/set_ip.html',
-                controller: 'SetIPCtrl'
+                templateUrl: 'templates/set_connect_ops.html',
+                controller: 'SetOpsCtrl'
             }
         }
     })
@@ -53,5 +53,5 @@ angular.module('stop_motion_pi_pro', ['ionic', 'stop_motion_pi_pro.controllers',
     })
     
   // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/set_ip');
+    $urlRouterProvider.otherwise('/app/set_connect_ops');
 });
