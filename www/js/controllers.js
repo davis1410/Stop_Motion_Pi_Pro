@@ -62,4 +62,13 @@ angular.module('stop_motion_pi_pro.controllers', [])
             });
         });
     };
+
+    $scope.take_interval = function() {
+        cameraService.take_interval(frames, secs).then(function(response) {
+            var success_message = $ionicPopup.alert({
+                title: "Message",
+                template: response
+            });
+        });
+    };
 });
