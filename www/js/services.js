@@ -41,6 +41,15 @@ angular.module('stop_motion_pi_pro.services', [])
             });
             
             return capture_image;
+        },
+        take_interval: function(ip, frames, sec) {
+            var capture_interval = $http.get('http://' + ip + ':8000/camera_ops/take_interval/?frames=' + frames + '&sec=' + sec)
+            .then(function(response) {
+                var image_captured = response.data.success;
+                return image_captured;
+            });
+
+            return capture_image;
         }
     }
 })
