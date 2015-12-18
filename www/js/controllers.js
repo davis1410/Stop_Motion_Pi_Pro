@@ -13,6 +13,7 @@ angular.module('stop_motion_pi_pro.controllers', [])
 .controller('SetOpsCtrl', function($scope, connectService) {
     var current_ip = connectService.get_ip();
     var current_dir = connectService.get_dir();
+    var current_framerate = connectService.get_framerate();
     
     if (current_ip) {
         $scope.current_ip = current_ip;
@@ -21,6 +22,10 @@ angular.module('stop_motion_pi_pro.controllers', [])
     if (current_dir) {
         $scope.current_dir = current_dir;
     };
+    
+    if (current_framerate) {
+        $scope.current_framerate = current_framerate;
+    }
     
     $scope.set_ip = function(ip, form_name) {
         connectService.set_ip(ip);
@@ -33,6 +38,11 @@ angular.module('stop_motion_pi_pro.controllers', [])
     $scope.set_dir = function(dir) {
         connectService.set_dir(dir);
         $scope.current_dir = dir;
+    };
+    
+    $scope.set_framerate = function(framerate) {
+        connectService.set_framerate(framerate);
+        $scope.current_framerate = framerate;
     };
 })
 
