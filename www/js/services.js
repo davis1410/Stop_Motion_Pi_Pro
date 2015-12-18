@@ -16,11 +16,17 @@ angular.module('stop_motion_pi_pro.services', [])
         },
         get_dir: function() {
             return localStorage['image_directory'];
+        },
+        set_framerate: function() {
+            localStorage['framerate'] = framerate;
+        },
+        get_framerate: function() {
+            return localStorage['framerate'];
         }
     }
 })
 
-.factory('cameraService', function($http) {
+.factory('cameraService', function($http, DjangoCamControllerAPI) {
     return {
         clear_mount: function(ip) {
             var get_pid = $http.get('http://' + ip + ':8000/camera_ops/clear_mount/')
@@ -34,7 +40,7 @@ angular.module('stop_motion_pi_pro.services', [])
         },
         take_image: function(ip, dir) {
             var capture_image = $http.get('http://' + ip + ':8000/camera_ops/take_image/?image_dir=' + dir)
-//            var capture_image = $http.get(DjangoCamControllerAPI + '/camera_ops/take_image/')
+//            var capture_image = $http.get(DjangoCamControllerAPI + '/camera_ops/take_image/?image_dir=' + dir)
             .then(function(response) {
                 var image_captured = response.data.result;
                 return image_captured;
@@ -42,8 +48,9 @@ angular.module('stop_motion_pi_pro.services', [])
             
             return capture_image;
         },
-        compile_preview: function(ip, dir) {
-            var compile_video = $http.get('http://' + ip + ':8000/camera_ops/compile_preview/?image_dir=' + dir)
+        compile_preview: function(ip, dir, framerate) {
+            var compile_video = $http.get('http://' + ip + ':8000/camera_ops/compile_preview/?image_dir=' + dir + '&framerate=' + framerate)
+//            var compile_video = $http.get(DjangoCamControllerAPI + '/camera_ops/compile_preview/?image_dir=' + dir + '&framerate=' + framerate)
             .then(function(response) {
                 var movie_compiled = response.data.result;
                 return movie_compiled;
