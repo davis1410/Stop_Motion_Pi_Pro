@@ -49,10 +49,12 @@ angular.module('stop_motion_pi_pro.controllers', [])
 .controller('takeImageCtrl', function($scope, $ionicPopup, connectService, cameraService) {
     var ip;
     var dir;
+    var framerate;
     
     $scope.$on('$ionicView.enter', function(e) {
         ip = connectService.get_ip();
         dir = connectService.get_dir();
+        framerate = connectService.get_framerate();
     });
     
     $scope.clear_mount = function() {
@@ -74,7 +76,7 @@ angular.module('stop_motion_pi_pro.controllers', [])
     };
     
     $scope.compile_preview = function() {
-        cameraService.compile_preview(ip, dir).then(function(response) {
+        cameraService.compile_preview(ip, dir, framerate).then(function(response) {
             var result = $ionicPopup.alert({
                 title: "Message",
                 template: response
