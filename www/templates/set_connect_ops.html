@@ -19,26 +19,6 @@
                 </div>
             </form>
         </div>
-       
-       <!-- Set Image Directory -->
-        <div class="card">
-            <div class="list" ng-if="current_dir">
-                <div class="item">
-                    ~/{{ current_dir }}
-                </div>
-            </div>
-           
-            <form name="set_image_directory" ng-submit="set_dir(image_directory)">
-                <div class="list">
-                    <label class="item item-input">
-                        <input type="text" placeholder="image directory" ng-model="image_directory">
-                    </label>
-                </div>
-                <div class="padding">
-                    <button class="button button-block button-positive">set image directory</button>
-                </div>
-            </form>
-        </div>
         
         <!-- Set Framerate -->
         <div class="card">

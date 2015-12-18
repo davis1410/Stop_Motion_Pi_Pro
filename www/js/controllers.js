@@ -12,15 +12,10 @@ angular.module('stop_motion_pi_pro.controllers', [])
 
 .controller('SetOpsCtrl', function($scope, connectService) {
     var current_ip = connectService.get_ip();
-    var current_dir = connectService.get_dir();
     var current_framerate = connectService.get_framerate();
     
     if (current_ip) {
         $scope.current_ip = current_ip;
-    };
-    
-    if (current_dir) {
-        $scope.current_dir = current_dir;
     };
     
     if (current_framerate) {
@@ -35,11 +30,6 @@ angular.module('stop_motion_pi_pro.controllers', [])
 //        $scope[form_name].$setUntouched();
     };
     
-    $scope.set_dir = function(dir) {
-        connectService.set_dir(dir);
-        $scope.current_dir = dir;
-    };
-    
     $scope.set_framerate = function(framerate) {
         connectService.set_framerate(framerate);
         $scope.current_framerate = framerate;
@@ -48,26 +38,15 @@ angular.module('stop_motion_pi_pro.controllers', [])
 
 .controller('takeImageCtrl', function($scope, $ionicPopup, connectService, cameraService) {
     var ip;
-    var dir;
     var framerate;
     
     $scope.$on('$ionicView.enter', function(e) {
         ip = connectService.get_ip();
-        dir = connectService.get_dir();
         framerate = connectService.get_framerate();
     });
     
-    $scope.clear_mount = function() {
-        cameraService.clear_mount(ip).then(function(response) {
-            var result = $ionicPopup.alert({
-                title: "Message",
-                template: response
-            })
-        })
-    };
-    
     $scope.take_image = function() {
-        cameraService.take_image(ip, dir).then(function(response) {
+        cameraService.take_image(ip).then(function(response) {
             var result = $ionicPopup.alert({
                 title: "Message",
                 template: response
@@ -76,7 +55,7 @@ angular.module('stop_motion_pi_pro.controllers', [])
     };
     
     $scope.compile_preview = function() {
-        cameraService.compile_preview(ip, dir, framerate).then(function(response) {
+        cameraService.compile_preview(ip, framerate).then(function(response) {
             var result = $ionicPopup.alert({
                 title: "Message",
                 template: response
