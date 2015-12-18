@@ -40,5 +40,25 @@
             </form>
         </div>
         
+        <!-- Set Framerate -->
+        <div class="card">
+            <div class="list" ng-if="current_framerate">
+                <div class="item">
+                    framerate = {{ current_framerate }}
+                </div>
+            </div>
+           
+            <form name="set_preview_framerate" ng-submit="set_framerate(framerate)">
+                <div class="list">
+                    <label class="item item-input">
+                        <input type="text" placeholder="framerate" ng-model="framerate">
+                    </label>
+                </div>
+                <div class="padding">
+                    <button class="button button-block button-energized">set framerate</button>
+                </div>
+            </form>
+        </div>
+        
     </ion-content>
 </ion-view>
