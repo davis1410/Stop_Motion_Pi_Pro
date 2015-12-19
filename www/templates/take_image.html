@@ -6,9 +6,30 @@
                 <button class="button button-block button-balanced" on-tap="take_image()">take image</button>
             </div>
             <div class="padding">
-                <button class="button button-block button-energized" on-tap="compile_preview()">compile preview</button>
+                <button class="button button-block button-calm" on-tap="compile_preview()">preview sequence</button>
             </div>
         </div>
+        
+        <script id="show_preview.html" type="text/ng-template">
+            <ion-header-bar align-title="center" class="bar-calm">
+                <h1 class="title">preview sequence</h1>
+
+                <button class="button button-icon" on-tap="closeModal()">
+                    <i class="icon ion-close-circled dark"></i>
+                </button>
+            </ion-header-bar>
+           
+            <ion-content>
+                <div class="card">
+                    <video class="padding" style="width: 100%; max-height: 100%" ng-src="{{ preview }}" controls></video>
+            <!--
+                    <div class="padding">
+                        <button class="button button-block button-dark" ng-click="closeModal()">close</button>
+                    </div>
+            -->
+                </div>
+            </ion-content>
+        </script>
         
     </ion-content>
 </ion-view>
