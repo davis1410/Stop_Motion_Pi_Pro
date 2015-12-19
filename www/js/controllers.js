@@ -36,9 +36,32 @@ angular.module('stop_motion_pi_pro.controllers', [])
     };
 })
 
-.controller('takeImageCtrl', function($scope, $ionicPopup, connectService, cameraService) {
+.controller('takeImageCtrl', function($scope, $ionicPopup, $ionicModal, $ionicLoading, $sce, connectService, cameraService) {
     var ip;
     var framerate;
+    
+    var show_message = function(response) {
+        var result = $ionicPopup.alert({
+            title: "Message",
+            template: response
+        });
+    };
+    
+    $scope.show_modal = function(template) {
+        $ionicModal.fromTemplateUrl(template, {
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+            $scope.modal.show();
+        })
+    }
+    
+//    Close Modal
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+        $scope.modal.remove();
+    }
     
     $scope.$on('$ionicView.enter', function(e) {
         ip = connectService.get_ip();
@@ -47,19 +70,20 @@ angular.module('stop_motion_pi_pro.controllers', [])
     
     $scope.take_image = function() {
         cameraService.take_image(ip).then(function(response) {
-            var result = $ionicPopup.alert({
-                title: "Message",
-                template: response
-            });
+            show_message(response);
         });
     };
     
     $scope.compile_preview = function() {
+        $ionicLoading.show({
+            template: 'Compiling preview. Please wait....'
+        });
+        
         cameraService.compile_preview(ip, framerate).then(function(response) {
-            var result = $ionicPopup.alert({
-                title: "Message",
-                template: response
-            });
+            $ionicLoading.hide();
+            
+            $scope.preview = $sce.trustAsResourceUrl('http://' + ip + ':8000/static/video/preview.mp4');
+            $scope.show_modal('show_preview.html');
         });
     };
 });
