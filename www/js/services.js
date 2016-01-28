@@ -1,7 +1,7 @@
 angular.module('stop_motion_pi_pro.services', [])
 
 //.constant('DjangoCamControllerAPI', '')
-.constant('DjangoCamControllerAPI', 'http://localhost:8100')
+//.constant('DjangoCamControllerAPI', 'http://localhost:8100')
 
 .factory('connectService', function() {
     return {
@@ -20,11 +20,11 @@ angular.module('stop_motion_pi_pro.services', [])
     }
 })
 
-.factory('cameraService', function($http, DjangoCamControllerAPI) {
+.factory('cameraService', function($http) {
     return {
         take_image: function(ip) {
-//            var url = 'http://' + ip + ':8000/camera_ops/take_image/;
-            var url = DjangoCamControllerAPI + '/camera_ops/take_image/';
+            var url = 'http://' + ip + ':8000/camera_ops/take_image/';
+//            var url = DjangoCamControllerAPI + '/camera_ops/take_image/';
             
             var capture_image = $http.get(url)
             .then(function(response) {
@@ -35,8 +35,8 @@ angular.module('stop_motion_pi_pro.services', [])
             return capture_image;
         },
         compile_preview: function(ip, framerate) {
-//            var url = 'http://' + ip + ':8000/camera_ops/compile_preview/?framerate=' + framerate;
-            var url = DjangoCamControllerAPI + '/camera_ops/compile_preview/?framerate=' + framerate;
+            var url = 'http://' + ip + ':8000/camera_ops/compile_preview/?framerate=' + framerate;
+//            var url = DjangoCamControllerAPI + '/camera_ops/compile_preview/?framerate=' + framerate;
             
             var compile_video = $http.get(url)
             .then(function(response) {
@@ -44,6 +44,17 @@ angular.module('stop_motion_pi_pro.services', [])
                 return movie_compiled;
             });
             return compile_video;
+        },
+        new_sequence_creation: function(ip) {
+            var url = 'http://' + ip + ':8000/camera_ops/new_sequence_creation/';
+            
+            var new_sequence = $http.get(url)
+            .then(function(response) {
+                var new_sequence_ready = response.data.result;
+                return new_sequence_ready;
+            });
+            
+            return new_sequence;
         }
     }
 })

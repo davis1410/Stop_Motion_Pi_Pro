@@ -36,7 +36,7 @@ angular.module('stop_motion_pi_pro.controllers', [])
     };
 })
 
-.controller('takeImageCtrl', function($scope, $ionicPopup, $ionicModal, $ionicLoading, $sce, connectService, cameraService) {
+.controller('sequenceCreationCtrl', function($scope, $ionicPopup, $ionicModal, $ionicLoading, $sce, connectService, cameraService) {
     var ip;
     var framerate;
     
@@ -69,7 +69,12 @@ angular.module('stop_motion_pi_pro.controllers', [])
     });
     
     $scope.take_image = function() {
+        $ionicLoading.show({
+            template: 'Capturing image. Please wait....'
+        });
+        
         cameraService.take_image(ip).then(function(response) {
+           $ionicLoading.hide(); 
             show_message(response);
         });
     };
@@ -86,4 +91,27 @@ angular.module('stop_motion_pi_pro.controllers', [])
             $scope.show_modal('show_preview.html');
         });
     };
+    
+    $scope.new_sequence_creation = function() { 
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Start New Sequence Confirmation',
+            template: 'Starting a new sequence will delete all images on the raspberry pi, but will preserve them on the camera memory card. Continue starting new sequence?'
+       });
+
+       confirmPopup.then(function(res) {
+            if (res) {
+                $ionicLoading.show({
+                    template: 'Preparing new sequence. Please wait....'
+                });
+
+                cameraService.new_sequence_creation(ip).then(function(response) {
+                    $ionicLoading.hide();
+
+                    show_message(response);
+                });
+            } else {
+                show_message("New sequence cancelled")
+            }
+       });
+    }
 });

@@ -32,6 +32,16 @@ angular.module('stop_motion_pi_pro', ['ionic', 'stop_motion_pi_pro.controllers',
         controller: 'AppCtrl'
     })
 
+    .state('app.sequence_creation', {
+        url: '/sequence_creation',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/sequence_creation.html',
+                controller: 'sequenceCreationCtrl'
+            }
+        }
+    })
+    
     .state('app.set_ip', {
         url: '/set_connect_ops',
         views: {
@@ -42,16 +52,6 @@ angular.module('stop_motion_pi_pro', ['ionic', 'stop_motion_pi_pro.controllers',
         }
     })
     
-    .state('app.take_image', {
-        url: '/take_image',
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/take_image.html',
-                controller: 'takeImageCtrl'
-            }
-        }
-    })
-    
   // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/set_connect_ops');
+    $urlRouterProvider.otherwise('/app/sequence_creation');
 });
