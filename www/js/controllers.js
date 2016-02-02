@@ -25,9 +25,6 @@ angular.module('stop_motion_pi_pro.controllers', [])
     $scope.set_ip = function(ip, form_name) {
         connectService.set_ip(ip);
         $scope.current_ip = ip;
-//        console.log(form_name);
-//        $scope[form_name].$setPristine();
-//        $scope[form_name].$setUntouched();
     };
     
     $scope.set_framerate = function(framerate) {
@@ -63,9 +60,16 @@ angular.module('stop_motion_pi_pro.controllers', [])
         $scope.modal.remove();
     }
     
+    var num_images = function(ip) {
+        cameraService.get_num_images(ip).then(function(num_images) {
+            $scope.num_images = num_images;
+        });
+    };
+    
     $scope.$on('$ionicView.enter', function(e) {
         ip = connectService.get_ip();
         framerate = connectService.get_framerate();
+        num_images(ip);
     });
     
     $scope.take_image = function() {
@@ -74,8 +78,9 @@ angular.module('stop_motion_pi_pro.controllers', [])
         });
         
         cameraService.take_image(ip).then(function(response) {
-           $ionicLoading.hide(); 
-            show_message(response);
+            $ionicLoading.hide(); 
+            show_message(response.result);
+            $scope.num_images = response.num_images;
         });
     };
     
@@ -107,7 +112,8 @@ angular.module('stop_motion_pi_pro.controllers', [])
                 cameraService.new_sequence_creation(ip).then(function(response) {
                     $ionicLoading.hide();
 
-                    show_message(response);
+                    show_message(response.result);
+                    $scope.num_images = response.num_images;
                 });
             } else {
                 show_message("New sequence cancelled")

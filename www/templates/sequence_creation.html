@@ -1,7 +1,11 @@
 <ion-view view-title="Sequence Creation" class="energized">
     <ion-content>
-
+       
         <div class="card list">
+           <div class="item">
+                # of images in sequence: {{ num_images }}
+           </div>
+           
             <div class="item item-button-right">
                 take image
                 <button class="button button-outline button-energized" on-tap="take_image()">

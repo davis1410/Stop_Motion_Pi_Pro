@@ -22,13 +22,27 @@ angular.module('stop_motion_pi_pro.services', [])
 
 .factory('cameraService', function($http) {
     return {
+        get_num_images: function(ip) {
+            var url = 'http://' + ip + ':8000/camera_ops/get_num_images/';
+            
+            var num_images = $http.get(url)
+            .then(function(response) {
+                var num_images_returned = response.data.num_images;
+                return num_images_returned;
+            });
+            
+            return num_images;
+        },
         take_image: function(ip) {
             var url = 'http://' + ip + ':8000/camera_ops/take_image/';
 //            var url = DjangoCamControllerAPI + '/camera_ops/take_image/';
             
             var capture_image = $http.get(url)
             .then(function(response) {
-                var image_captured = response.data.result;
+                var image_captured = {
+                    result: response.data.result,
+                    num_images: response.data.num_images
+                }
                 return image_captured;
             });
             
@@ -50,7 +64,10 @@ angular.module('stop_motion_pi_pro.services', [])
             
             var new_sequence = $http.get(url)
             .then(function(response) {
-                var new_sequence_ready = response.data.result;
+                var new_sequence_ready = {
+                    result: response.data.result,
+                    num_images: response.data.num_images
+                }
                 return new_sequence_ready;
             });
             
